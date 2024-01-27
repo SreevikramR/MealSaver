@@ -18,3 +18,24 @@ body {
     text-wrap: balance;
   }
 }
+.button-container {
+  display: flex;
+  justify-content: space-between; /* Align buttons to the left and right edges */
+}
+
+.red-button {
+  background-color: red;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  /* Use border-radius with large values for curved corners */
+  border-radius: 50px;
+  /* Optional box-shadow to add more depth to the curve */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  cursor: pointer;
+}
+
+/* Optional hover effect */
+.red-button:hover {
+  background-color: #d00000; /* Slightly darker red on hover */
+}
