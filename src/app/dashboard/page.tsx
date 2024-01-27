@@ -1,5 +1,6 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import logo from '@/app/favicon.ico';
 import { useRouter } from 'next/navigation';
@@ -24,6 +25,15 @@ const Page = () => {
     const router = useRouter();
     const [isClubsSelected, setIsClubsSelected] = useState(true);
 
+    const Map = useMemo(() => dynamic(
+        () => import('@/components/map/mapComponent'),
+        { 
+          loading: () => <p>A map is loading</p>,
+          ssr: false
+        }
+      ), [])
+    
+
     return (
         <div>
             <div className='bg-black text-white pl-4 pt-2 pb-2 text-3xl font-medium tracking-wider flex flex-row w-screen fixed'>
@@ -46,7 +56,9 @@ const Page = () => {
                     <_card/>
                 </div>
                 <div className='h-[80vh] w-1/2 flex flex-wrap align-middle mt-10 mr-6 fixed right-0'>
-                    <div className='border-2 border-black h-full w-full'></div>
+                    <div className='border-2 border-black h-full w-full'>
+                        <Map />
+                    </div>
                 </div>
             </div>
         </div>
