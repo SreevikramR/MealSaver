@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { AuthClient } from '@supabase/supabase-js'
 
-const page = () => {
+const Page = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -28,4 +28,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

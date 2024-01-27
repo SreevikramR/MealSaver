@@ -18,7 +18,7 @@ const _card = () => {
     );
 }
 
-const page = () => {
+const Page = () => {
     return (
         <div>
             <div className='bg-black text-white pl-4 pt-2 pb-2 text-3xl font-medium tracking-wider flex flex-row w-screen fixed'>
@@ -48,4 +48,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page
