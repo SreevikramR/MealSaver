@@ -1,4 +1,6 @@
 import React from 'react'
+import Image from 'next/image';
+import logo from '@/app/favicon.ico';
 
 const _card = () => {
     return (
@@ -19,8 +21,9 @@ const _card = () => {
 const page = () => {
     return (
         <div>
-            <div className='bg-black text-white p-4 text-3xl font-medium tracking-wider w-screen fixed'>
-                MealSaver
+            <div className='bg-black text-white pl-4 pt-2 pb-2 text-3xl font-medium tracking-wider flex flex-row w-screen fixed'>
+                <Image src={logo} width={50} height={50} alt='logo'/>
+                <div className='h-full pt-2 pl-3'>MealSaver</div>
             </div>
             <div className='flex flex-row ml-4 pt-16'>
                 <div className='w-1/2'>
