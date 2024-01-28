@@ -22,9 +22,10 @@ async function name() {
   console.log(data)
 }
 
+
 const _card = () => {
     return (
-        <div className='mt-4 ml-10 w-5/6 border-2 border-slate-300 hover:border-black rounded-xl p-3 flex flex-row'>
+        <div className='mt-4 ml-14 w-5/6 border-2 border-slate-300 hover:border-black rounded-xl p-3 flex flex-row'>
             <div className='w-3/4 flex flex-col 'onClick={() => name()}>
                 <div className='text-xl font-bold'>ABC Club</div>
                 <div className='font-semibold '>Free Pizza and Drinks</div>
@@ -40,7 +41,28 @@ const _card = () => {
 
 const Page = () => {
     const router = useRouter();
+    const [isPopUpOpen, setIsPopUpOpen] = useState(true);
     const [isClubsSelected, setIsClubsSelected] = useState(true);
+    
+    const _popUp = () => {
+        return (
+            <div className='fixed z-10 w-[45%] h-3/5 border-2 mt-20 bg-white  border-black mb-2 flex flex-col justify-center items-center rounded-r-xl'>
+                <div className='w-full h-full bg-zinc-100 rounded-xl flex flex-col justify-center items-center'>
+                    <div className='top-0 right-0 absolute mr-5 mt-3 font-extrabold text-xl hover:cursor-pointer' onClick={() => setIsPopUpOpen(false)}>X</div>
+                    <div className='text-3xl font-bold'>Club ABC</div>
+                    <div className='text-xl font-medium pb-5'>Event Name</div>
+                    <div className='text-2xl font-semibold'>Free Pizza and Drinks</div>
+                    <div className='text-lg font-light pb-5'>Description</div>
+                    <div className='text-2xl font-medium'>1st February 2024 - 7:00 PM</div>
+                    <div className='text-lg font-light pb-5'>ILCB 100</div>
+                    <div className='flex flex-row mt-6'>
+                        <div className='text-2xl font-medium p-2 px-4 mr-4 text-white bg-green-600 rounded-xl hover:cursor-pointer hover:bg-green-700'>Yes, I plan on attending!</div>
+                        <div className='text-2xl font-medium p-2 px-4 border-2 ml-4 bg-black rounded-xl text-white hover:cursor-pointer hover:bg-slate-800'>Maybe...</div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     const Map = useMemo(() => dynamic(
         () => import('@/components/map/mapComponent'),
@@ -59,13 +81,13 @@ const Page = () => {
                 <Image src={logo} width={50} height={50} alt='logo' className='hover:cursor-pointer' onClick={() => router.push("/")}/>
                 <div className='h-full pt-2 pl-3 hover:cursor-pointer ' onClick={() => router.push("/")}>MealSaver</div>
             </div>
-            <div className='flex flex-row ml-4 pt-16'>
+            <div className='flex flex-row pt-16'>
                 <div className='w-1/2'>
-                    <div className='ml-10 pt-10 mb-8 flex flex-row border-b-2 border-black w-fit'>
+                {isPopUpOpen && <_popUp/>}
+                    <div className='ml-14 pt-10 mb-8 flex flex-row border-b-2 border-black w-fit'>
                         <div className={'text-2xl pb-1 border-black cursor-pointer ' + (isClubsSelected ? 'border-b-8' : '')} onClick={() => setIsClubsSelected(true)}>Clubs and Organizations</div>
                         <div className={'text-2xl ml-5 pb-1 border-black cursor-pointer ' + (!isClubsSelected ? 'border-b-8' : '')} onClick={() => setIsClubsSelected(false)}>Restaurants</div>
                     </div>
-
                     <_card/>
                     <_card/>
                     <_card/>
