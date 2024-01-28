@@ -17,13 +17,15 @@ async function name() {
   console.log(data)
 }
 
-interface User {
+interface Event {
     id: string,
-    isClub: boolean,
-    isIndividual: boolean,
-    isRestaurant: boolean,
+    eventName: string,
+    description: string,
+    date: string,
+    time: string,
     location: string,
-    name: string,
+    roomNumber: string,
+    items: string
 }
 
 const Page = () => {
@@ -36,8 +38,9 @@ const Page = () => {
     const [eventRoom, setEventRoom] = useState('');
     const [eventFood, setEventFood] = useState('');
     const [isPopUpOpen, setIsPopUpOpen] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [events, setEvents] = useState<any[]>([])
+    const [activeEvent, setActiveEvent] = useState<Event | null>(null)
 
     useEffect(() => {
         const subscription = supabase.auth.onAuthStateChange(
@@ -45,7 +48,7 @@ const Page = () => {
                 if (session == null) {
                     router.push('/')
                 } else {
-                    setIsLoggedIn(true)
+                    getData()
                 }
         })
 
@@ -53,6 +56,15 @@ const Page = () => {
             subscription.data.subscription.unsubscribe()
         }
     }, [])
+
+    const getData = async () => {
+        const userUUID = (await supabase.auth.getUser()).data.user?.id
+        const { data, error } = await supabase.from('clubs').select('*').eq('creator', userUUID)
+        console.log(data)
+        if (data) {
+            setEvents(data)
+        }
+    }
 
     const addEvent = async () => {
         setIsLoading(true)
@@ -77,13 +89,13 @@ const Page = () => {
         setIsLoading(false)
     }
     
-    const _card = () => {
+    const _card = ( event : Event) => {
         return (
-            <div className='mt-4 ml-10 w-5/6 border-2 border-slate-300 hover:border-black hover:cursor-pointer rounded-xl p-3 flex flex-row justify-between'>
+            <div className='mt-4 ml-10 w-5/6 border-2 border-slate-300 hover:border-black hover:cursor-pointer rounded-xl p-3 flex flex-row justify-between' onClick={() => setActiveEvent(event)}>
                 <div className='w-3/4 flex flex-col 'onClick={() => setIsPopUpOpen(true)}>
-                    <div className='text-xl font-bold'>Event Name</div>
-                    <div className='font-semibold '>Free Pizza and Drinks</div>
-                    <div className='font-light'>ILCB 100</div>
+                    <div className='text-xl font-bold'>{event.eventName}</div>
+                    <div className='font-semibold '>{event.items}</div>
+                    <div className='font-light'>{event.location} - {event.roomNumber}</div>
                 </div>
                 <div className='text-center items-center pt-3 flex content-center flex-wrap flex-row h-full center'>
                     <div className='flex flex-col mr-3'>
@@ -105,12 +117,11 @@ const Page = () => {
             <div className='fixed z-10 w-[45%] h-4/5 border-2 right-0 mt-20 bg-white  border-black mb-2 flex flex-col justify-center items-center rounded-l-xl'>
                 <div className='w-full h-full bg-zinc-100 rounded-xl flex flex-col justify-center items-center'>
                     <div className='top-0 left-0 absolute ml-5 mt-3 font-extrabold text-xl hover:cursor-pointer' onClick={() => setIsPopUpOpen(false)}>X</div>
-                    <div className='text-3xl font-bold'>Club ABC</div>
-                    <div className='text-xl font-medium pb-5'>Event Name</div>
-                    <div className='text-2xl font-semibold'>Free Pizza and Drinks</div>
-                    <div className='text-lg font-light pb-5'>Description</div>
-                    <div className='text-2xl font-medium'>1st February 2024 - 7:00 PM</div>
-                    <div className='text-lg font-light pb-5'>ILCB 100</div>
+                    <div className='text-2xl font-semibold pb-5'>{activeEvent?.eventName}</div>
+                    <div className='text-2xl font-semibold'>{activeEvent?.items}</div>
+                    <div className='text-lg font-light pb-5 pl-8 pr-2'>{activeEvent?.description}</div>
+                    <div className='text-2xl font-medium'>{activeEvent?.date} - {activeEvent?.time}</div>
+                    <div className='text-lg font-light pb-5'>{activeEvent?.location} - {activeEvent?.roomNumber}</div>
                     <div className='flex flex-row'>
                         <div className='flex flex-col text-center mr-4'>
                             <div className='text-xl font-semibold'>23</div>
@@ -139,13 +150,11 @@ const Page = () => {
             <div className='flex flex-row ml-4 pt-16'>
                 <div className='w-1/2'>
                     <div className='ml-10 pt-10 mb-2 flex flex-row w-fit text-2xl'>My Scheduled Events</div>
-                    <_card/>
-                    <_card/>
-                    <_card/>
-                    <_card/>
-                    <_card/>
-                    <_card/>
-                    <_card/>
+                    {events.map((event) => {
+                        return (
+                            <_card {...event} key={event.id}/>
+                        )
+                    })}
                 </div>
                 <div className='w-1/2'>
                     {isPopUpOpen && <_popUp/>}
