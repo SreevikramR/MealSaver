@@ -4,17 +4,30 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import logo from '@/app/favicon.ico';
 import { useRouter } from 'next/navigation';
+import { createClient } from '@supabase/supabase-js'
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_API_KEY || ''  
+const supabase = createClient(supabaseUrl, supabaseKey)
+
+
 
 interface MarkerData {
     name: string,
     description: string,
     location: [number, number]
 }
+async function name() {
+    const { data, error } = await supabase
+  .from('clubs')
+  .select()
+  console.log(data)
+}
 
 const _card = () => {
     return (
-        <div className='mt-4 ml-10 w-5/6 border-2 border-slate-300 hover:border-black rounded-xl p-3 flex flex-row '>
-            <div className='w-3/4 flex flex-col '>
+        <div className='mt-4 ml-10 w-5/6 border-2 border-slate-300 hover:border-black rounded-xl p-3 flex flex-row'>
+            <div className='w-3/4 flex flex-col 'onClick={() => name()}>
                 <div className='text-xl font-bold'>ABC Club</div>
                 <div className='font-semibold '>Free Pizza and Drinks</div>
                 <div className='font-light'>ILCB 100</div>
@@ -44,7 +57,7 @@ const Page = () => {
 
     return (
         <div>
-            <div className='bg-black text-white pl-4 pt-2 pb-2 text-3xl font-medium tracking-wider flex flex-row w-screen fixed'>
+            <div className='bg-black text-white pl-4 pt-2 pb-2 text-3xl font-medium tracking-wider flex flex-row w-screen fixed '>
                 <Image src={logo} width={50} height={50} alt='logo' className='hover:cursor-pointer' onClick={() => router.push("/")}/>
                 <div className='h-full pt-2 pl-3 hover:cursor-pointer' onClick={() => router.push("/")}>MealSaver</div>
             </div>
