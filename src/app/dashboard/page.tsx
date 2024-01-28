@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 
 const _card = () => {
     return (
-        <div className='mt-4 ml-10 w-5/6 border-2 border-black rounded-xl p-3 flex flex-row '>
+        <div className='mt-4 ml-10 w-5/6 border-2 border-slate-300 rounded-xl hover:border-black rounded-xl p-3 flex flex-row '>
             <div className='w-3/4 flex flex-col '>
                 <div className='text-xl font-bold'>ABC Club</div>
                 <div className='font-semibold '>Free Pizza and Drinks</div>
