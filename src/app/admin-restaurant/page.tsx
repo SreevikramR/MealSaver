@@ -112,14 +112,8 @@ const Page = () => {
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
+
         </PageWrapper>
-=======
-            <footer className="text-center mt-8 text-gray-500 text-sm">
-            &copy; 2024 Meal Saver. All rights reserved.
-        </footer>
-        </div>
->>>>>>> 348afb07060c2f4050ef506f68daf5b6d6832e42
     )
 }
 
