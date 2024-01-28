@@ -19,8 +19,6 @@ async function name() {
 
 const Page = () => {
     const router = useRouter();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [isPopUpOpen, setIsPopUpOpen] = useState(false);
     const [title, setTitle] = useState('');
     const [items, setItems] = useState('');
@@ -35,7 +33,7 @@ const Page = () => {
         const { data, error } = await supabase.from('users').select('*').eq('id', userUUID)
         const restaurantName = data && data[0] && data[0].name
         const restaurantLocation = data && data[0] && data[0].location
-        const response = await supabase.from('restaurants').insert({ restaurantName: restaurantName, couponTitle: title, items: items, date: date, time: time, description: description, location:location })
+        const response = await supabase.from('restaurants').insert({ restaurantName: restaurantName, couponTitle: title, items: items, date: date, time: time, description: description, location:restaurantLocation })
         if (response.error) {
             alert('Error adding event')
             console.log(response.error)
@@ -60,7 +58,7 @@ const Page = () => {
                     <div className='font-light'>Location</div>
                 </div>
                 <div className='text-center justify-end flex content-center flex-wrap'>
-                    <div className='text-2xl font-bold	'>7:00 PM</div>
+                    <div className='text-2xl font-bold'>7:00 PM</div>
                     <div className='font-light'>1st February 2024</div>
                 </div>
             </div>

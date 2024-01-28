@@ -46,7 +46,9 @@ const Page = () => {
     const [isClubsSelected, setIsClubsSelected] = useState(true); 
     const [restaurantsList, setRestaurantsList] = useState<Restaurant[]>([]);
     const [eventsList, setEventsList] = useState<Event[]>([]);
-
+    const [restaurantIsSelected, setRestaurantIsSelected] = useState(false);
+    const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+    const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(null);
     const [isLogged, setIsLogged] = useState(false);
 
     useEffect(() => {
@@ -97,7 +99,7 @@ const Page = () => {
     
     const _card = (event:Event) => {
         return (
-            <div className='mt-4 ml-14 w-5/6 border-2 border-slate-300 hover:border-black items-center justify-between rounded-xl p-3 flex flex-row hover:cursor-pointer'>
+            <div className='mt-4 ml-14 w-5/6 border-2 border-slate-300 hover:border-black items-center justify-between rounded-xl p-3 flex flex-row hover:cursor-pointer' onClick={() => {setRestaurantIsSelected(false); setSelectedEvent(event)}}>
                 <div className='w-3/4 flex flex-col 'onClick={() => setIsPopUpOpen(true)}>
                     <div className='text-xl font-bold'>{event.clubName}</div>
                     <div className='font-semibold '>{event.items}</div>
@@ -113,7 +115,7 @@ const Page = () => {
 
     const _restaurantCard = (restaurant:Restaurant) => {
         return (
-            <div className='mt-4 ml-14 w-5/6 border-2 border-slate-300 hover:border-black items-center justify-between rounded-xl p-3 flex flex-row hover:cursor-pointer'>
+            <div className='mt-4 ml-14 w-5/6 border-2 border-slate-300 hover:border-black items-center justify-between rounded-xl p-3 flex flex-row hover:cursor-pointer' onClick={() => {setRestaurantIsSelected(true); setSelectedRestaurant(restaurant)}}>
                 <div className='w-3/4 flex flex-col 'onClick={() => setIsPopUpOpen(true)}>
                     <div className='text-xl font-bold'>{restaurant.restaurantName}</div>
                     <div className='font-semibold '>{restaurant.items}</div>
@@ -128,23 +130,39 @@ const Page = () => {
     }
     
     const _popUp = () => {
-        return (
-            <div className='fixed z-10 w-[45%] h-3/5 border-2 mt-20 bg-white  border-black mb-2 flex flex-col justify-center items-center rounded-r-xl'>
-                <div className='w-full h-full bg-zinc-100 rounded-xl flex flex-col justify-center items-center'>
-                    <div className='top-0 right-0 absolute mr-5 mt-3 font-extrabold text-xl hover:cursor-pointer' onClick={() => setIsPopUpOpen(false)}>X</div>
-                    <div className='text-3xl font-bold'>Club ABC</div>
-                    <div className='text-xl font-medium pb-5'>Event Name</div>
-                    <div className='text-2xl font-semibold'>Free Pizza and Drinks</div>
-                    <div className='text-lg font-light pb-5'>Description</div>
-                    <div className='text-2xl font-medium'>1st February 2024 - 7:00 PM</div>
-                    <div className='text-lg font-light pb-5'>ILCB 100</div>
-                    <div className='flex flex-row mt-6'>
-                        <div className='text-2xl font-medium p-2 px-4 mr-4 text-white bg-green-600 rounded-xl hover:cursor-pointer hover:bg-green-700'>Yes, I plan on attending!</div>
-                        <div className='text-2xl font-medium p-2 px-4 border-2 ml-4 bg-black rounded-xl text-white hover:cursor-pointer hover:bg-slate-800'>Maybe...</div>
+        if (!restaurantIsSelected) {
+            return (
+                <div className='fixed z-10 w-[45%] h-3/5 border-2 mt-20 bg-white  border-black mb-2 flex flex-col justify-center items-center rounded-r-xl'>
+                    <div className='w-full h-full bg-zinc-100 rounded-xl flex flex-col justify-center items-center'>
+                        <div className='top-0 right-0 absolute mr-5 mt-3 font-extrabold text-xl hover:cursor-pointer' onClick={() => setIsPopUpOpen(false)}>X</div>
+                        <div className='text-3xl font-bold'>{selectedEvent?.clubName}</div>
+                        <div className='text-xl font-medium pb-5'>Event Name</div>
+                        <div className='text-2xl font-semibold'>{selectedEvent?.items}</div>
+                        <div className='text-lg font-light pb-5'>Description</div>
+                        <div className='text-2xl font-medium'>{selectedEvent?.date} - {selectedEvent?.time}</div>
+                        <div className='text-lg font-light pb-5'>{selectedEvent?.location} - {selectedEvent?.roomNumber}</div>
+                        <div className='flex flex-row mt-6'>
+                            <div className='text-2xl font-medium p-2 px-4 mr-4 text-white bg-green-600 rounded-xl hover:cursor-pointer hover:bg-green-700'>Yes, I plan on attending!</div>
+                            <div className='text-2xl font-medium p-2 px-4 border-2 ml-4 bg-black rounded-xl text-white hover:cursor-pointer hover:bg-slate-800'>Maybe...</div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        } else {
+            return (
+                <div className='fixed z-10 w-[45%] h-3/5 border-2 mt-20 bg-white  border-black mb-2 flex flex-col justify-center items-center rounded-r-xl'>
+                    <div className='w-full h-full bg-zinc-100 rounded-xl flex flex-col justify-center items-center'>
+                        <div className='top-0 right-0 absolute mr-5 mt-3 font-extrabold text-xl hover:cursor-pointer' onClick={() => setIsPopUpOpen(false)}>X</div>
+                        <div className='text-3xl font-bold'>{selectedRestaurant?.restaurantName}</div>
+                        <div className='text-xl font-medium pb-5'>Coupon Title</div>
+                        <div className='text-2xl font-semibold'>{selectedRestaurant?.items}</div>
+                        <div className='text-lg font-light pb-5'>Description</div>
+                        <div className='text-2xl font-medium'>{selectedRestaurant?.date} - {selectedRestaurant?.time}</div>
+                        <div className='text-lg font-light pb-5'>{selectedRestaurant?.location}</div>
+                    </div>
+                </div>
+            );
+        }
     }
 
     const Map = useMemo(() => dynamic(
