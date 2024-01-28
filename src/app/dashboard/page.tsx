@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import logo from '@/app/favicon.ico';
@@ -23,26 +23,27 @@ async function name() {
 }
 
 
-const _card = () => {
-    return (
-        <div className='mt-4 ml-14 w-5/6 border-2 border-slate-300 hover:border-black rounded-xl p-3 flex flex-row'>
-            <div className='w-3/4 flex flex-col 'onClick={() => name()}>
-                <div className='text-xl font-bold'>ABC Club</div>
-                <div className='font-semibold '>Free Pizza and Drinks</div>
-                <div className='font-light'>ILCB 100</div>
-            </div>
-            <div className='text-center justify-end flex content-center flex-wrap'>
-                <div className='text-2xl font-bold	'>7:00 PM</div>
-                <div className='font-light'>1st February 2024</div>
-            </div>
-        </div>
-    );
-}
 
 const Page = () => {
     const router = useRouter();
     const [isPopUpOpen, setIsPopUpOpen] = useState(true);
-    const [isClubsSelected, setIsClubsSelected] = useState(true);
+    const [isClubsSelected, setIsClubsSelected] = useState(true); 
+    
+    const _card = () => {
+        return (
+            <div className='mt-4 ml-14 w-5/6 border-2 border-slate-300 hover:border-black rounded-xl p-3 flex flex-row hover:cursor-pointer'>
+                <div className='w-3/4 flex flex-col 'onClick={() => setIsPopUpOpen(true)}>
+                    <div className='text-xl font-bold'>ABC Club</div>
+                    <div className='font-semibold '>Free Pizza and Drinks</div>
+                    <div className='font-light'>ILCB 100</div>
+                </div>
+                <div className='text-center justify-end flex content-center flex-wrap'>
+                    <div className='text-2xl font-bold	'>7:00 PM</div>
+                    <div className='font-light'>1st February 2024</div>
+                </div>
+            </div>
+        );
+    }
     
     const _popUp = () => {
         return (

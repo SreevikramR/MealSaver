@@ -10,11 +10,6 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_API_KEY || ''  
 const supabase = createClient(supabaseUrl, supabaseKey)
 
-interface MarkerData {
-    name: string,
-    description: string,
-    location: [number, number]
-}
 async function name() {
     const { data, error } = await supabase
   .from('clubs')
@@ -22,43 +17,64 @@ async function name() {
   console.log(data)
 }
 
-const _card = () => {
-    return (
-        <div className='mt-4 ml-10 w-5/6 border-2 border-slate-300 hover:border-black rounded-xl p-3 flex flex-row justify-between'>
-            <div className='w-3/4 flex flex-col 'onClick={() => name()}>
-                <div className='text-xl font-bold'>Event Name</div>
-                <div className='font-semibold '>Free Pizza and Drinks</div>
-                <div className='font-light'>ILCB 100</div>
-            </div>
-            <div className='text-center items-center pt-3 flex content-center flex-wrap flex-row h-full center'>
-                <div className='flex flex-col mr-3'>
-                    <div className='text-2xl font-bold'>23</div>
-                    <div className='font-light'>Confirmed</div>
-                </div>
-                <div className='flex flex-col'>
-                    <div className='text-2xl font-bold'>10</div>
-                    <div className='font-light'>Maybe</div>
-                </div>
-            </div>
-        </div>
-    );
-}
 
 const Page = () => {
     const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [isClubsSelected, setIsClubsSelected] = useState(true);
+    const [isPopUpOpen, setIsPopUpOpen] = useState(true);
+    
+    const _card = () => {
+        return (
+            <div className='mt-4 ml-10 w-5/6 border-2 border-slate-300 hover:border-black hover:cursor-pointer rounded-xl p-3 flex flex-row justify-between'>
+                <div className='w-3/4 flex flex-col 'onClick={() => setIsPopUpOpen(true)}>
+                    <div className='text-xl font-bold'>Event Name</div>
+                    <div className='font-semibold '>Free Pizza and Drinks</div>
+                    <div className='font-light'>ILCB 100</div>
+                </div>
+                <div className='text-center items-center pt-3 flex content-center flex-wrap flex-row h-full center'>
+                    <div className='flex flex-col mr-3'>
+                        <div className='text-2xl font-bold'>23</div>
+                        <div className='font-light'>Confirmed</div>
+                    </div>
+                    <div className='flex flex-col'>
+                        <div className='text-2xl font-bold'>10</div>
+                        <div className='font-light'>Maybe</div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
-    const Map = useMemo(() => dynamic(
-        () => import('@/components/map/mapComponent'),
-        { 
-          loading: () => <p>A map is loading</p>,
-          ssr: false
-        }
-      ), [])
-
-    const data:MarkerData[] = [{"name":"Club ABC", "description":"Free Pizza and Drinks", "location":[30.616131817894647, -96.34003360046086]}, {"name":"Club ABC", "description":"Free Pizza and Drinks", "location":[30.6123018, -96.3417165]}, {"name":"Club ABC", "description":"Free Pizza and Drinks", "location":[30.615173429343546, -96.34390437249968]}]
+    const _popUp = () => {
+        return (
+            <div className='fixed z-10 w-[45%] h-4/5 border-2 right-0 mt-20 bg-white  border-black mb-2 flex flex-col justify-center items-center rounded-l-xl'>
+                <div className='w-full h-full bg-zinc-100 rounded-xl flex flex-col justify-center items-center'>
+                    <div className='top-0 left-0 absolute ml-5 mt-3 font-extrabold text-xl hover:cursor-pointer' onClick={() => setIsPopUpOpen(false)}>X</div>
+                    <div className='text-3xl font-bold'>Club ABC</div>
+                    <div className='text-xl font-medium pb-5'>Event Name</div>
+                    <div className='text-2xl font-semibold'>Free Pizza and Drinks</div>
+                    <div className='text-lg font-light pb-5'>Description</div>
+                    <div className='text-2xl font-medium'>1st February 2024 - 7:00 PM</div>
+                    <div className='text-lg font-light pb-5'>ILCB 100</div>
+                    <div className='flex flex-row'>
+                        <div className='flex flex-col text-center mr-4'>
+                            <div className='text-xl font-semibold'>23</div>
+                            <div className='text-thin'>Confirmed</div>
+                        </div>
+                        <div className='flex flex-col text-center ml-4'>
+                            <div className='text-xl font-semibold'>10</div>
+                            <div className='text-thin'>Maybe</div>
+                        </div>
+                    </div>
+                    <div className='flex flex-row mt-6'>
+                        <div className='text-2xl font-medium p-2 px-4 mr-4 text-white bg-black rounded-xl hover:cursor-pointer hover:bg-slate-800'>Edit</div>
+                        <div className='text-2xl font-medium p-2 px-4 border-2 ml-4 bg-red-600 rounded-xl text-white hover:cursor-pointer hover:bg-red-700'>Delete</div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div>
@@ -78,6 +94,7 @@ const Page = () => {
                     <_card/>
                 </div>
                 <div className='w-1/2'>
+                    {isPopUpOpen && <_popUp/>}
                     <div className='pt-10 mb-2 w-full text-2xl text-center'>Create New Event</div>
                     <div className='flex justify-center items-center flex-col text-xl pt-3'>
                         <div className='w-3/4'>
