@@ -11,11 +11,6 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_API_KEY || ''  
 const supabase = createClient(supabaseUrl, supabaseKey)
 
-interface MarkerData {
-    name: string,
-    description: string,
-    location: [number, number]
-}
 interface Event {
     id: string,
     eventName: string,
@@ -26,6 +21,8 @@ interface Event {
     roomNumber: string,
     items: string
     clubName: string,
+    latitude: number,
+    longitude: number
 }
 
 interface Restaurant {
@@ -136,9 +133,9 @@ const Page = () => {
                     <div className='w-full h-full bg-zinc-100 rounded-xl flex flex-col justify-center items-center'>
                         <div className='top-0 right-0 absolute mr-5 mt-3 font-extrabold text-xl hover:cursor-pointer' onClick={() => setIsPopUpOpen(false)}>X</div>
                         <div className='text-3xl font-bold'>{selectedEvent?.clubName}</div>
-                        <div className='text-xl font-medium pb-5'>Event Name</div>
+                        <div className='text-xl font-medium pb-5'>{selectedEvent?.eventName}</div>
                         <div className='text-2xl font-semibold'>{selectedEvent?.items}</div>
-                        <div className='text-lg font-light pb-5'>Description</div>
+                        <div className='text-lg font-light pb-5 px-4'>{selectedEvent?.description}</div>
                         <div className='text-2xl font-medium'>{selectedEvent?.date} - {selectedEvent?.time}</div>
                         <div className='text-lg font-light pb-5'>{selectedEvent?.location} - {selectedEvent?.roomNumber}</div>
                         <div className='flex flex-row mt-6'>
@@ -154,9 +151,9 @@ const Page = () => {
                     <div className='w-full h-full bg-zinc-100 rounded-xl flex flex-col justify-center items-center'>
                         <div className='top-0 right-0 absolute mr-5 mt-3 font-extrabold text-xl hover:cursor-pointer' onClick={() => setIsPopUpOpen(false)}>X</div>
                         <div className='text-3xl font-bold'>{selectedRestaurant?.restaurantName}</div>
-                        <div className='text-xl font-medium pb-5'>Coupon Title</div>
+                        <div className='text-xl font-medium pb-5'>{selectedRestaurant?.couponTitle}</div>
                         <div className='text-2xl font-semibold'>{selectedRestaurant?.items}</div>
-                        <div className='text-lg font-light pb-5'>Description</div>
+                        <div className='text-lg font-light pb-5'>{selectedRestaurant?.description}</div>
                         <div className='text-2xl font-medium'>{selectedRestaurant?.date} - {selectedRestaurant?.time}</div>
                         <div className='text-lg font-light pb-5'>{selectedRestaurant?.location}</div>
                     </div>
@@ -171,10 +168,7 @@ const Page = () => {
           loading: () => <p>A map is loading</p>,
           ssr: false
         }
-      ), [])
-
-    const data:MarkerData[] = [{"name":"Club ABC", "description":"Free Pizza and Drinks", "location":[30.616131817894647, -96.34003360046086]}, {"name":"Club ABC", "description":"Free Pizza and Drinks", "location":[30.6123018, -96.3417165]}, {"name":"Club ABC", "description":"Free Pizza and Drinks", "location":[30.615173429343546, -96.34390437249968]}]
-    
+    ), [])
 
     return (
         <PageWrapper>
@@ -198,7 +192,7 @@ const Page = () => {
                 </div>
                 <div className='h-[80vh] w-1/2 flex flex-wrap align-middle mt-10 mr-6 fixed right-0'>
                     <div className='border-2 border-black h-full w-full'>
-                        <Map markers={data}/>
+                        <Map markers={eventsList}/>
                     </div>
                 </div>
             </div>
