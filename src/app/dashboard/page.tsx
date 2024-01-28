@@ -20,7 +20,7 @@ interface MarkerData {
 async function name() {
     const { data, error } = await supabase
   .from('clubs')
-  .select()
+  .select('*')
   console.log(data)
 }
 
