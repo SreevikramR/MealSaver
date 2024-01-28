@@ -53,7 +53,7 @@ const Page = () => {
                             <div className='pt-2 font-semibold text-3xl text-center mb-10'>Tell us More!</div>
                             <div className='flex justify-center items-center flex-col text-xl pt-3'>
                                 <div className='w-3/4'>
-                                    <div className='text-2xl'>What's your name?</div>
+                                    <div className='text-2xl'>What&apos;s your name?</div>
                                     <input className='w-full border-2 border-black rounded-lg p-2' type='text' value={email} onChange={(e) => setEmail(e.target.value)} />
                                 </div>
                                 <div className='w-3/4 pt-10'>
@@ -69,7 +69,7 @@ const Page = () => {
                             <div className='pt-2 font-semibold text-3xl text-center mb-10'>Tell us More!</div>
                             <div className='flex justify-center items-center flex-col text-xl pt-3'>
                                 <div className='w-3/4'>
-                                    <div className='text-xl'>What's the name of your Club / Organization?</div>
+                                    <div className='text-xl'>What&apos;s the name of your Club / Organization?</div>
                                     <input className='w-full border-2 border-black rounded-lg p-2' type='text' value={email} onChange={(e) => setEmail(e.target.value)} />
                                 </div>
                                 <div className='w-3/4 pt-10'>
@@ -85,7 +85,7 @@ const Page = () => {
                         <div className='pt-2 font-semibold text-3xl text-center mb-10'>Tell us More!</div>
                         <div className='flex justify-center items-center flex-col text-xl pt-3'>
                             <div className='w-3/4'>
-                                <div className='text-2xl'>What's the name of your Restaurant?</div>
+                                <div className='text-2xl'>What&apos;s the name of your Restaurant?</div>
                                 <input className='w-full border-2 border-black rounded-lg p-2' type='text' value={email} onChange={(e) => setEmail(e.target.value)} />
                             </div>
                             <div className='w-3/4 pt-10'>
