@@ -186,10 +186,10 @@ const Page = () => {
                         <div className={'text-2xl ml-5 pb-1 border-black cursor-pointer ' + (!isClubsSelected ? 'border-b-8' : '')} onClick={() => setIsClubsSelected(false)}>Restaurants</div>
                     </div>
                     {isClubsSelected && eventsList.map((event) => {
-                        return <_card {...event}/>
+                        return <_card {...event} key={event.id}/>
                     })}
                     {!isClubsSelected && restaurantsList.map((restaurant) => {
-                        return <_restaurantCard {...restaurant}/>
+                        return <_restaurantCard {...restaurant} key={restaurant.id}/>
                     })}
                 </div>
                 <div className='h-[80vh] w-1/2 flex flex-wrap align-middle mt-10 mr-6 fixed right-0'>
