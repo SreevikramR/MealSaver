@@ -1,10 +1,28 @@
 "use client"
 import React, { useState } from 'react'
-import { AuthClient } from '@supabase/supabase-js'
+import { createClient } from '@supabase/supabase-js'
+import { useRouter } from 'next/navigation'
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_API_KEY || ''  
+const supabase = createClient(supabaseUrl, supabaseKey)
 
 const Page = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const router = useRouter()
+
+    const handleLogin = async () => {
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email,
+            password,
+        })
+        if (error) {
+            alert(error.message)
+        } else {
+            router.push('/dashboard')
+        }
+    }
 
     return (
         <div className='w-screen h-screen flex justify-center items-center flex-col'>
@@ -20,7 +38,7 @@ const Page = () => {
                         <input className='w-full border-2 border-black rounded-lg p-2' type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
                     </div>
                     <div className='w-3/4 pt-10'>
-                        <button className='w-full border-2 border-black bg-black text-white p-2 rounded-lg'>Login</button>
+                        <button className='w-full border-2 border-black bg-black text-white p-2 rounded-lg' onClick={handleLogin}>Login</button>
                     </div>
                 </div>
             </div>
