@@ -3,7 +3,7 @@
 export default function Home() {
     return (
       
-		<div>
+		<body className="background-image: back;">
 			<div className="bg-gray-100 flex flex-col justify-center items-center h-screen">
 				<div className="text-5xl font-bold text-gray-800 mt-16">Meal Saver</div>
 				<div className="text-lg text-gray-600 mb-16">Savor Savings, Satisfy Cravings: Your Ultimate Food Coupon and Free Food Finder</div>
@@ -13,6 +13,6 @@ export default function Home() {
         <a href="signup"><button className="bg-black hover:bg-gray-600 text-white font-bold py-4 px-7 rounded-full">Sign Up</button>
       </a></div>
 </div> 
-		</div>
+		</body>
     );
 }
