@@ -31,13 +31,20 @@ export default function Home() {
                 <li className="text-center flex-col text-gray-700 mb-2">Promote Your Restaurant: Share your discounts and deals to attract more customers.</li>
             </ul>
         </div>
+        <div className="mt-8 p-4 bg-gray-100 rounded-lg shadow-md">
+            <h2 className="text-xl text-gray-800 font-semibold mb-4">Sign Up for Our Notification System</h2>
+            <form className="flex flex-col md:flex-row md:justify-center items-right">
+                <input type="email" placeholder="Your Email Address" className="w-full md:w-auto px-4 py-2 mb-2 md:mb-0 md:mr-2 bg-gray-100 border border-gray-500 rounded-lg focus:outline-none focus:border-gray-500"/>
+                <button type="submit" className="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Subscribe</button>
+            </form>
+        </div>
+    </div>
 
         <footer className="text-center mt-8 text-gray-500 text-sm">
             &copy; 2024 Meal Saver. All rights reserved.
         </footer>
     </div>
     
-</div>
 
             
 
