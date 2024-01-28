@@ -8,7 +8,7 @@ import { createClient } from '@supabase/supabase-js'
 import PageWrapper from '@/components/wrappers/pageWrapper';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_API_KEY || ''  
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_API_KEY || '' 
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 interface Event {
@@ -46,6 +46,7 @@ const Page = () => {
     const [restaurantIsSelected, setRestaurantIsSelected] = useState(false);
     const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
     const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(null);
+    const [name, setName] = useState('');
     const [isLogged, setIsLogged] = useState(false);
     const [confirmDisabled, setConfirmDisabled] = useState(false);
     const [maybeDisabled, setMaybeDisabled] = useState(false);
@@ -66,8 +67,25 @@ const Page = () => {
     }, [])
 
     useEffect(() => {
+        getName()
         getData()
     }, [isLogged])
+
+    const getName = async () => {
+        const userUUID = (await supabase.auth.getUser()).data.user?.id
+        const { data, error } = await supabase
+            .from('users')
+            .select('name')
+            .eq('id', userUUID)
+        if (error) {
+            console.log(error)
+        } else {
+            if (data) {
+                console.log(data)
+                setName(data[0].name)
+            }
+        }
+    }
 
     const getData = async () => {
         const { data: events, error } = await supabase
@@ -177,6 +195,7 @@ const Page = () => {
             <div className='bg-black text-white pl-4 pt-2 pb-2 text-3xl font-medium tracking-wider flex flex-row w-screen fixed '>
                 <Image src={logo} width={50} height={50} alt='logo' className='hover:cursor-pointer' onClick={() => router.push("/")}/>
                 <div className='h-full pt-2 pl-3 hover:cursor-pointer ' onClick={() => router.push("/")}>MealSaver</div>
+                <div className='pt-2 right-0 absolute mr-6'>Hi {name}!</div>
             </div>
             <div className='flex flex-row pt-16'>
                 <div className='w-1/2'>

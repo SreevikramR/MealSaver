@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useMemo } from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image';
 import logo from '@/app/favicon.ico';
 import { useRouter } from 'next/navigation';
@@ -9,6 +9,18 @@ import PageWrapper from '@/components/wrappers/pageWrapper';
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_API_KEY || ''  
 const supabase = createClient(supabaseUrl, supabaseKey)
+
+interface Restaurant {
+    id: string,
+    restraunt: string,
+    restaurantName: string,
+    couponTitle: string,
+    items: string, 
+    date: string, 
+    time: string, 
+    description: string,
+    location: string
+}
 
 async function name() {
     const { data, error } = await supabase
@@ -26,6 +38,37 @@ const Page = () => {
     const [time, setTime] = useState('');
     const [description, setDescription] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [isLogged, setIsLogged] = useState(false);
+    const [events, setEvents] = useState<any[]>([])
+
+    useEffect(() => {
+        const subscription = supabase.auth.onAuthStateChange(
+            (event, session) => {
+                if (session == null) {
+                    router.push('/')
+                } else {
+                    setIsLogged(true)
+                }
+        })
+
+        return () => {
+            subscription.data.subscription.unsubscribe()
+        }
+    }, [])
+
+    useEffect(() => {
+        getData()
+    }, [isLogged])
+
+    const getData = async () => {
+        const userUUID = (await supabase.auth.getUser()).data.user?.id
+        const { data, error } = await supabase.from('restaurants').select('*').eq('restaurant', userUUID)
+        console.log(error)
+        console.log(data)
+        if (data) {
+            setEvents(data)
+        }
+    }
 
     const addCoupon = async () => {
         setIsLoading(true)
@@ -49,17 +92,17 @@ const Page = () => {
         setIsLoading(false)
     }
     
-    const _card = () => {
+    const _card = (restaurant:Restaurant) => {
         return (
-            <div className='mt-4 ml-10 w-5/6 border-2 border-slate-300 hover:border-black rounded-xl p-3 flex flex-row hover:cursor-pointer'>
+            <div className='mt-4 ml-14 w-5/6 border-2 border-slate-300 hover:border-black items-center justify-between rounded-xl p-3 flex flex-row hover:cursor-pointer' >
                 <div className='w-3/4 flex flex-col 'onClick={() => setIsPopUpOpen(true)}>
-                    <div className='text-xl font-bold'>Coupon Title</div>
-                    <div className='font-semibold '>Discount Amoun</div>
-                    <div className='font-light'>Location</div>
+                    <div className='text-xl font-bold'>{restaurant.restaurantName}</div>
+                    <div className='font-semibold '>{restaurant.items}</div>
+                    <div className='font-light'>{restaurant.location}</div>
                 </div>
-                <div className='text-center justify-end flex content-center flex-wrap'>
-                    <div className='text-2xl font-bold'>7:00 PM</div>
-                    <div className='font-light'>1st February 2024</div>
+                <div className='text-right h-fill flex-end flex flex-col flex-wrap'>
+                    <div className='text-xl font-bold'>{restaurant.time}</div>
+                    <div className='font-light'>{restaurant.date}</div>
                 </div>
             </div>
         );
@@ -93,13 +136,11 @@ const Page = () => {
             <div className='flex flex-row ml-4 pt-16'>
                 <div className='w-1/2'>
                     <div className='ml-10 pt-10 mb-2 flex flex-row w-fit text-2xl'>My Coupons</div>
-                    <_card/>
-                    <_card/>
-                    <_card/>
-                    <_card/>
-                    <_card/>
-                    <_card/>
-                    <_card/>
+                    {events.map((event) => {
+                        return (
+                            <_card {...event} key={event.id}/>
+                        )
+                    })}
                 </div>
                 <div className='w-1/2'>
                     {isPopUpOpen && <_popUp/>}
