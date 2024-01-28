@@ -16,33 +16,28 @@ export default function Home() {
 </a>
         <a href="signup"><button className="bg-black hover:bg-gray-600 text-white font-bold py-4 px-7 rounded-full">Sign Up</button>
       </a></div></div>
-      <div className='flex justify-center items-center h-screen bg-gray-100'>
-    <div className='flex flex-col justify-center items-center text-xl pt-3'>
-        <div className='flex flex-col justify-center items-center mb-8'>
-            <div className='mr-8 rounded-xl flex flex-wrap flex-col justify-center place-items-center mb-4'>
-                <div className='flex relative mb-4 h-40 w-40'>
-                    <Image src={saveMoneyImg} alt='Save Money' layout='contain' className='h-full w-full object-contain'/>
-                </div>
-                <div className='font-semibold text-2xl flex relative mb-4 '>Just want to save some money! You get locations for free food and Coupons for restaurants</div>
-            </div>
-            <div className='mr-8 rounded-xl flex flex-wrap flex-col justify-center place-items-center mb-4'>
-                <div className='flex relative mb-4 h-40 w-40'>
-                    <Image src={clubImg} alt='Save Money' layout='contain' className='h-full w-full object-contain'/>
-                </div>
-                <div className='font-semibold text-2xl'>Bring more people to Your Club / Organization Events and make them a part of it! Promote your club here!</div>
-            </div>
-            <div className='rounded-xl flex flex-wrap flex-col justify-center place-items-center'>
-                <div className='flex relative mb-4 h-40 w-40'>
-                    <Image src={restaurantImg} alt='Save Money' layout='contain' className='h-full w-full object-contain'/>
-                </div>
-                <div className='font-semibold text-2xl'>Promote Your Restaurant By sharing your Discounts and deals!</div>
-            </div>
+      
+    
+    
+    <div className="container mx-auto px-4 py-8 bg-gray-100">
+        <h1 className="text-3xl text-center text-gray-800 font-bold mb-8">Join Meal Saver Today!</h1>
+        
+        <div className="  rounded-lg shadow-md shadow-zinc-200 mb-8 bg-gray-100">
+            <h2 className="text-2xl text-center text-gray-800 font-semibold mb-4 bg-gray-100">Why Join Meal Saver?</h2>
+            <ul className="list-disc list-inside bg-gray-100">
+                <li className="text-center text-gray-700 mb-2">Save Money: Get locations for free food and coupons for restaurants.</li>
+                <li className="text-center text-gray-700 mb-2">Community Engagement: Bring more people to your club/organization events and make them a part of it!</li>
+                <li className="text-center text-gray-700 mb-2">Promote Your Club: Showcase your club or organization's events here.</li>
+                <li className="text-center flex-col text-gray-700 mb-2">Promote Your Restaurant: Share your discounts and deals to attract more customers.</li>
+            </ul>
         </div>
+
+        
     </div>
 </div>
 
             
-</div> 
+
 
 		
     );
