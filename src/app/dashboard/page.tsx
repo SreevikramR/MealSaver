@@ -5,6 +5,12 @@ import Image from 'next/image';
 import logo from '@/app/favicon.ico';
 import { useRouter } from 'next/navigation';
 
+interface MarkerData {
+    name: string,
+    description: string,
+    location: [number, number]
+}
+
 const _card = () => {
     return (
         <div className='mt-4 ml-10 w-5/6 border-2 border-black rounded-xl p-3 flex flex-row '>
@@ -32,6 +38,8 @@ const Page = () => {
           ssr: false
         }
       ), [])
+
+    const data:MarkerData[] = [{"name":"Club ABC", "description":"Free Pizza and Drinks", "location":[30.616131817894647, -96.34003360046086]}]
     
 
     return (
@@ -57,7 +65,7 @@ const Page = () => {
                 </div>
                 <div className='h-[80vh] w-1/2 flex flex-wrap align-middle mt-10 mr-6 fixed right-0'>
                     <div className='border-2 border-black h-full w-full'>
-                        <Map />
+                        <Map markers={data}/>
                     </div>
                 </div>
             </div>
