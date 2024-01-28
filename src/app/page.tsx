@@ -1,22 +1,25 @@
 "use client"
-import Image from 'next/image'
-import saveMoneyImg from '../../public/save_money.png'
-import restaurantImg from '../../public/restaurant.jpg'
-import clubImg from '../../public/club.png'
+import styles from '@/app/home.module.css'
 
 export default function Home() {
     return (
       
 		<div className="">
 			<div className="bg-white flex flex-col justify-center items-center h-screen">
-				<div className="text-5xl font-bold text-gray-800 mt-16">MealSaver</div>
-				<div className="text-lg text-gray-600 mb-16">Savor Savings, Satisfy Cravings: Your Ultimate Food Coupon and Free Food Finder</div>
-                <div className='text-4xl mb-48 bottom-0 absolute'>&#129147;</div>
+                <div className={styles.headingText}>
+                    <div className="text-5xl font-bold text-gray-800 mt-16">MealSaver</div>
+                    <div className="text-lg text-gray-600 mb-16">Savor Savings, Satisfy Cravings: Your Ultimate Food Coupon and Free Food Finder</div>
+                </div>
+                <div className='text-4xl mb-48 bottom-0 absolute'>
+                    <div className={styles.arrow}>&#129147;</div>
+                </div>
                 <div className="flex flex-row mb-10 justify-center absolute bottom-0">
-                    <a href="login" className="flex-row pr-10">
-                        <button className="bg-black hover:bg-gray-600 text-white font-bold py-3 px-14 rounded-xl " >Login</button>
-                    </a>
-                    <a href="signup"><button className="bg-black hover:bg-gray-600 text-white font-bold py-3 px-14 rounded-xl">Sign Up</button></a>
+                    <div className={styles.buttons}>
+                        <a href="login" className="flex-row pr-10">
+                            <button className="bg-black hover:bg-gray-600 text-white font-bold py-3 px-14 rounded-xl " >Login</button>
+                        </a>
+                        <a href="signup"><button className="bg-black hover:bg-gray-600 text-white font-bold py-3 px-14 rounded-xl">Sign Up</button></a>
+                    </div>
                 </div>
             </div>
 
