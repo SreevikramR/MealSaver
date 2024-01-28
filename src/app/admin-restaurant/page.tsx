@@ -22,6 +22,33 @@ const Page = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isPopUpOpen, setIsPopUpOpen] = useState(false);
+    const [title, setTitle] = useState('');
+    const [items, setItems] = useState('');
+    const [date, setDate] = useState('');
+    const [time, setTime] = useState('');
+    const [description, setDescription] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+
+    const addCoupon = async () => {
+        setIsLoading(true)
+        const userUUID = (await supabase.auth.getUser()).data.user?.id
+        const { data, error } = await supabase.from('users').select('*').eq('id', userUUID)
+        const restaurantName = data && data[0] && data[0].name
+        const response = await supabase.from('restaurants').insert({ restaurantName: restaurantName, couponTitle: title, items: items, date: date, time: time, description: description })
+        if (response.error) {
+            alert('Error adding event')
+            console.log(response.error)
+        }
+        else {
+            alert('Event added successfully!')
+            setTitle('')
+            setItems('')
+            setDate('')
+            setTime('')
+            setDescription('')
+        }
+        setIsLoading(false)
+    }
     
     const _card = () => {
         return (
@@ -82,32 +109,28 @@ const Page = () => {
                     <div className='flex justify-center items-center flex-col text-xl pt-3'>
                         <div className='w-3/4'>
                             <div className='text-2xl'>What's the title for the Coupon?</div>
-                            <input className='w-full border-2 border-black rounded-lg p-2' type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
+                            <input className='w-full border-2 border-black rounded-lg p-2' type='email' value={title} onChange={(e) => setTitle(e.target.value)} />
                         </div>
                         <div className='w-3/4 pt-3'>
                             <div className='text-2xl'>What items does it apply to?</div>
-                            <input className='w-full border-2 border-black rounded-lg p-2' type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
-                        </div>
-                        <div className='w-3/4 pt-3'>
-                            <div className='text-2xl'>What is the Room number?</div>
-                            <input className='w-full border-2 border-black rounded-lg p-2' type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+                            <input className='w-full border-2 border-black rounded-lg p-2' type='text' value={items} onChange={(e) => setItems(e.target.value)} />
                         </div>
                         <div className='flex flex-row w-3/4 pt-3'>
                             <div className='w-1/2 mr-2'>
                                 <div className='text-xl'>Till when is the coupon available?</div>
-                                <input className='w-full border-2 border-black rounded-lg p-2' type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+                                <input className='w-full border-2 border-black rounded-lg p-2' type='text' value={date} onChange={(e) => setDate(e.target.value)} />
                             </div>
                             <div className='w-1/2 ml-2'>
                                 <div className='text-xl pt-7'>What time is it available till?</div>
-                                <input className='w-full border-2 border-black rounded-lg p-2' type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+                                <input className='w-full border-2 border-black rounded-lg p-2' type='text' value={time} onChange={(e) => setTime(e.target.value)} />
                             </div>
                         </div>
                         <div className='w-3/4 pt-3'>
                             <div className='text-2xl'>Please provide a description for the event</div>
-                            <textarea className='w-full border-2 border-black rounded-lg p-2' rows={5} />
+                            <textarea className='w-full border-2 border-black rounded-lg p-2' rows={5} value={description} onChange={(e) => setDescription(e.target.value)}/>
                         </div>
                         <div className='w-3/4 pt-10'>
-                            <button className='w-full border-2 border-black bg-black text-white p-2 rounded-lg'>Create Coupon</button>
+                            <button className={'w-full border-2 border-black bg-black hover:bg-zinc-800 text-white p-2 rounded-lg ' + (isLoading ? 'hover:cursor-not-allowed' : '')} onClick={addCoupon}>Create Coupon</button>
                         </div>
                     </div>
                 </div>
