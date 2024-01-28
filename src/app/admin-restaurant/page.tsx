@@ -77,7 +77,6 @@ const Page = () => {
                     <div className='text-2xl font-medium'>1st February 2024 - 7:00 PM</div>
                     <div className='text-lg font-light pb-5'>ILCB 100</div>
                     <div className='flex flex-row mt-6'>
-                        <div className='text-2xl font-medium p-2 px-4 mr-4 text-white bg-black rounded-xl hover:cursor-pointer hover:bg-slate-800'>Edit</div>
                         <div className='text-2xl font-medium p-2 px-4 border-2 ml-4 bg-red-600 rounded-xl text-white hover:cursor-pointer hover:bg-red-700'>Delete</div>
                     </div>
                 </div>

@@ -47,6 +47,8 @@ const Page = () => {
     const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
     const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(null);
     const [isLogged, setIsLogged] = useState(false);
+    const [confirmDisabled, setConfirmDisabled] = useState(false);
+    const [maybeDisabled, setMaybeDisabled] = useState(false);
 
     useEffect(() => {
         const { data } = supabase.auth.onAuthStateChange(

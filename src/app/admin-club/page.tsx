@@ -131,7 +131,6 @@ const Page = () => {
                         </div>
                     </div>
                     <div className='flex flex-row mt-6'>
-                        <div className='text-2xl font-medium p-2 px-4 mr-4 text-white bg-black rounded-xl hover:cursor-pointer hover:bg-slate-800'>Edit</div>
                         <div className='text-2xl font-medium p-2 px-4 border-2 ml-4 bg-red-600 rounded-xl text-white hover:cursor-pointer hover:bg-red-700'>Delete</div>
                     </div>
                 </div>
