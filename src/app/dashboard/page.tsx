@@ -58,8 +58,6 @@ const Page = () => {
             <div className='bg-black text-white pl-4 pt-2 pb-2 text-3xl font-medium tracking-wider flex flex-row w-screen fixed '>
                 <Image src={logo} width={50} height={50} alt='logo' className='hover:cursor-pointer' onClick={() => router.push("/")}/>
                 <div className='h-full pt-2 pl-3 hover:cursor-pointer ' onClick={() => router.push("/")}>MealSaver</div>
-                <div className='flex flex-end '><button className="bg-white hover:bg-gray-600 text-black  py-2 px-2 rounded-full">Report Information</button>
-      </div>
             </div>
             <div className='flex flex-row ml-4 pt-16'>
                 <div className='w-1/2'>
