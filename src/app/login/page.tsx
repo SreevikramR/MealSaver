@@ -20,7 +20,15 @@ const Page = () => {
         if (error) {
             alert(error.message)
         } else {
-            router.push('/dashboard')
+            const userUUID = (await supabase.auth.getUser()).data.user?.id
+            const { data, error } = await supabase.from('users').select('*').eq('id', userUUID)
+            if (data && data[0] && data[0].isClub) {
+                router.push('/admin-club')
+            } else if (data && data[0] && data[0].isIndividual) {
+                router.push('/dashboard')
+            } else if (data && data[0] && data[0].isRestaurant) {
+                router.push('/admin-restaurant')
+            }
         }
     }
 

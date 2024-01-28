@@ -1,10 +1,10 @@
 "use client"
-import React, { useState, useMemo } from 'react'
-import dynamic from 'next/dynamic';
+import React, { useState, useMemo, useEffect } from 'react'
 import Image from 'next/image';
 import logo from '@/app/favicon.ico';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@supabase/supabase-js'
+import PageWrapper from '@/components/wrappers/pageWrapper';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_API_KEY || ''  
@@ -17,12 +17,37 @@ async function name() {
   console.log(data)
 }
 
+interface User {
+    id: string,
+    isClub: boolean,
+    isIndividual: boolean,
+    isRestaurant: boolean,
+    location: string,
+    name: string,
+}
 
 const Page = () => {
     const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isPopUpOpen, setIsPopUpOpen] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        const subscription = supabase.auth.onAuthStateChange(
+            (event, session) => {
+                if (session == null) {
+                    router.push('/')
+                } else {
+                    setIsLoggedIn(true)
+                }
+        })
+
+        return () => {
+            subscription.data.subscription.unsubscribe()
+        }
+    }, [])
+    
     
     const _card = () => {
         return (
@@ -77,7 +102,7 @@ const Page = () => {
     }
 
     return (
-        <div>
+        <PageWrapper>
             <div className='bg-black text-white pl-4 pt-2 pb-2 text-3xl font-medium tracking-wider flex flex-row w-screen fixed '>
                 <Image src={logo} width={50} height={50} alt='logo' className='hover:cursor-pointer' onClick={() => router.push("/")}/>
                 <div className='h-full pt-2 pl-3 hover:cursor-pointer ' onClick={() => router.push("/")}>MealSaver</div>
@@ -133,7 +158,7 @@ const Page = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </PageWrapper>
     )
 }
 

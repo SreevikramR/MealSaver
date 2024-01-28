@@ -5,6 +5,7 @@ import Image from 'next/image';
 import logo from '@/app/favicon.ico';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@supabase/supabase-js'
+import PageWrapper from '@/components/wrappers/pageWrapper';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_API_KEY || ''  
@@ -78,7 +79,7 @@ const Page = () => {
     
 
     return (
-        <div>
+        <PageWrapper>
             <div className='bg-black text-white pl-4 pt-2 pb-2 text-3xl font-medium tracking-wider flex flex-row w-screen fixed '>
                 <Image src={logo} width={50} height={50} alt='logo' className='hover:cursor-pointer' onClick={() => router.push("/")}/>
                 <div className='h-full pt-2 pl-3 hover:cursor-pointer ' onClick={() => router.push("/")}>MealSaver</div>
@@ -104,7 +105,7 @@ const Page = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </PageWrapper>
     )
 }
 
