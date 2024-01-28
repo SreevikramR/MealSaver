@@ -90,12 +90,12 @@ const Page = () => {
     const _card = ( event : Event) => {
         return (
             <div className='mt-4 ml-10 w-5/6 border-2 border-slate-300 hover:border-black hover:cursor-pointer rounded-xl p-3 flex flex-row justify-between' onClick={() => setActiveEvent(event)}>
-                <div className='w-3/4 flex flex-col 'onClick={() => setIsPopUpOpen(true)}>
+                <div className='w-3/5 flex flex-col 'onClick={() => setIsPopUpOpen(true)}>
                     <div className='text-xl font-bold'>{event.eventName}</div>
                     <div className='font-semibold '>{event.items}</div>
                     <div className='font-light'>{event.location} - {event.roomNumber}</div>
                 </div>
-                <div className='text-center items-center pt-3 flex content-center flex-wrap flex-row h-full center'>
+                <div className='text-center items-center pt-3 flex content-center flex-wrap flex-row h-full center r-0'>
                     <div className='flex flex-col mr-3'>
                         <div className='text-2xl font-bold'>23</div>
                         <div className='font-light'>Confirmed</div>
