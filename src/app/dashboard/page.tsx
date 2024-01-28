@@ -51,8 +51,8 @@ const Page = () => {
             <div className='flex flex-row ml-4 pt-16'>
                 <div className='w-1/2'>
                     <div className='ml-10 pt-10 mb-8 flex flex-row border-b-2 border-black w-fit'>
-                        <div className={'text-2xl pb-2 border-black cursor-pointer ' + (isClubsSelected ? 'border-b-4' : '')} onClick={() => setIsClubsSelected(true)}>Clubs and Organizations</div>
-                        <div className={'text-2xl ml-5 pb-2 border-black cursor-pointer ' + (!isClubsSelected ? 'border-b-4' : '')} onClick={() => setIsClubsSelected(false)}>Restaurants</div>
+                        <div className={'text-2xl pb-1 border-black cursor-pointer ' + (isClubsSelected ? 'border-b-8' : '')} onClick={() => setIsClubsSelected(true)}>Clubs and Organizations</div>
+                        <div className={'text-2xl ml-5 pb-1 border-black cursor-pointer ' + (!isClubsSelected ? 'border-b-8' : '')} onClick={() => setIsClubsSelected(false)}>Restaurants</div>
                     </div>
 
                     <_card/>
