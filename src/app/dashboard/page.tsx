@@ -7,15 +7,15 @@ import { useRouter } from 'next/navigation';
 
 const _card = () => {
     return (
-        <div className='mt-4 ml-10 w-5/6 border-2 border-black rounded-xl p-3 flex flex-row'>
-            <div className='w-3/4 flex flex-col'>
-                <div>ABC Club</div>
-                <div>Free Pizza and Drinks</div>
-                <div>ILCB 100</div>
+        <div className='mt-4 ml-10 w-5/6 border-2 border-black rounded-xl p-3 flex flex-row '>
+            <div className='w-3/4 flex flex-col '>
+                <div className='text-xl font-bold'>ABC Club</div>
+                <div className='font-semibold '>Free Pizza and Drinks</div>
+                <div className='font-light'>ILCB 100</div>
             </div>
             <div className='text-center justify-end flex content-center flex-wrap'>
-                <div>7:00 PM</div>
-                <div>1st February 2024</div>
+                <div className='text-2xl font-bold	'>7:00 PM</div>
+                <div className='font-light'>1st February 2024</div>
             </div>
         </div>
     );
