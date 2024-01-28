@@ -34,7 +34,8 @@ const Page = () => {
         const userUUID = (await supabase.auth.getUser()).data.user?.id
         const { data, error } = await supabase.from('users').select('*').eq('id', userUUID)
         const restaurantName = data && data[0] && data[0].name
-        const response = await supabase.from('restaurants').insert({ restaurantName: restaurantName, couponTitle: title, items: items, date: date, time: time, description: description })
+        const restaurantLocation = data && data[0] && data[0].location
+        const response = await supabase.from('restaurants').insert({ restaurantName: restaurantName, couponTitle: title, items: items, date: date, time: time, description: description, location:location })
         if (response.error) {
             alert('Error adding event')
             console.log(response.error)

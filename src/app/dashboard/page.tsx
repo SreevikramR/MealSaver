@@ -28,11 +28,25 @@ interface Event {
     clubName: string,
 }
 
+interface Restaurant {
+    id: string,
+    restraunt: string,
+    restaurantName: string,
+    couponTitle: string,
+    items: string, 
+    date: string, 
+    time: string, 
+    description: string,
+    location: string
+}
+
 const Page = () => {
     const router = useRouter();
     const [isPopUpOpen, setIsPopUpOpen] = useState(false);
     const [isClubsSelected, setIsClubsSelected] = useState(true); 
+    const [restaurantsList, setRestaurantsList] = useState<Restaurant[]>([]);
     const [eventsList, setEventsList] = useState<Event[]>([]);
+
     const [isLogged, setIsLogged] = useState(false);
 
     useEffect(() => {
@@ -66,6 +80,19 @@ const Page = () => {
                 setEventsList(events)
             }
         }
+
+        const { data: restaurants, error: error2 } = await supabase
+            .from('restaurants')
+            .select('*')
+        if (error2) {
+            console.log(error2)
+        }
+        else {
+            if (restaurants) {
+                console.log(restaurants)
+                setRestaurantsList(restaurants)
+            }
+        }
     }
     
     const _card = (event:Event) => {
@@ -79,6 +106,22 @@ const Page = () => {
                 <div className='text-right h-fill flex-end flex flex-col flex-wrap'>
                     <div className='text-xl font-bold'>{event.time}</div>
                     <div className='font-light'>{event.date}</div>
+                </div>
+            </div>
+        );
+    }
+
+    const _restaurantCard = (restaurant:Restaurant) => {
+        return (
+            <div className='mt-4 ml-14 w-5/6 border-2 border-slate-300 hover:border-black items-center justify-between rounded-xl p-3 flex flex-row hover:cursor-pointer'>
+                <div className='w-3/4 flex flex-col 'onClick={() => setIsPopUpOpen(true)}>
+                    <div className='text-xl font-bold'>{restaurant.restaurantName}</div>
+                    <div className='font-semibold '>{restaurant.items}</div>
+                    <div className='font-light'>{restaurant.location}</div>
+                </div>
+                <div className='text-right h-fill flex-end flex flex-col flex-wrap'>
+                    <div className='text-xl font-bold'>{restaurant.time}</div>
+                    <div className='font-light'>{restaurant.date}</div>
                 </div>
             </div>
         );
@@ -128,8 +171,11 @@ const Page = () => {
                         <div className={'text-2xl pb-1 border-black cursor-pointer ' + (isClubsSelected ? 'border-b-8' : '')} onClick={() => setIsClubsSelected(true)}>Clubs and Organizations</div>
                         <div className={'text-2xl ml-5 pb-1 border-black cursor-pointer ' + (!isClubsSelected ? 'border-b-8' : '')} onClick={() => setIsClubsSelected(false)}>Restaurants</div>
                     </div>
-                    {eventsList.map((event) => {
+                    {isClubsSelected && eventsList.map((event) => {
                         return <_card {...event}/>
+                    })}
+                    {!isClubsSelected && restaurantsList.map((restaurant) => {
+                        return <_restaurantCard {...restaurant}/>
                     })}
                 </div>
                 <div className='h-[80vh] w-1/2 flex flex-wrap align-middle mt-10 mr-6 fixed right-0'>
