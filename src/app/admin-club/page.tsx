@@ -28,10 +28,16 @@ interface User {
 
 const Page = () => {
     const router = useRouter();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [eventName, setEventName] = useState('');
+    const [eventDescription, setEventDescription] = useState('');
+    const [eventDate, setEventDate] = useState('');
+    const [eventTime, setEventTime] = useState('');
+    const [eventLocation, setEventLocation] = useState('');
+    const [eventRoom, setEventRoom] = useState('');
+    const [eventFood, setEventFood] = useState('');
     const [isPopUpOpen, setIsPopUpOpen] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const subscription = supabase.auth.onAuthStateChange(
@@ -47,7 +53,29 @@ const Page = () => {
             subscription.data.subscription.unsubscribe()
         }
     }, [])
-    
+
+    const addEvent = async () => {
+        setIsLoading(true)
+        const userUUID = (await supabase.auth.getUser()).data.user?.id
+        const { data, error } = await supabase.from('users').select('*').eq('id', userUUID)
+        const clubName = data && data[0] && data[0].name
+        const response = await supabase.from('clubs').insert({ clubName: clubName, eventName: eventName, description: eventDescription, date: eventDate, time: eventTime, location: eventLocation, roomNumber: eventRoom, items: eventFood })
+        if (response.error) {
+            alert('Error adding event')
+            console.log(response.error)
+        }
+        else {
+            alert('Event added successfully!')
+            setEventName('')
+            setEventDescription('')
+            setEventDate('')
+            setEventTime('')
+            setEventLocation('')
+            setEventRoom('')
+            setEventFood('')
+        }
+        setIsLoading(false)
+    }
     
     const _card = () => {
         return (
@@ -67,9 +95,6 @@ const Page = () => {
                         <div className='font-light'>Maybe</div>
                     </div>
                 </div>
-                <footer className="text-center mt-8 text-gray-500 text-sm">
-            &copy; 2024 Meal Saver. All rights reserved.
-        </footer>
             </div>
         );
     }
@@ -127,36 +152,36 @@ const Page = () => {
                     <div className='flex justify-center items-center flex-col text-xl pt-3'>
                         <div className='w-3/4'>
                             <div className='text-2xl'>What's the name of your event?</div>
-                            <input className='w-full border-2 border-black rounded-lg p-2' type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
+                            <input className='w-full border-2 border-black rounded-lg p-2' type='email' value={eventName} onChange={(e) => setEventName(e.target.value)} />
                         </div>
                         <div className='w-3/4 pt-3'>
                             <div className='text-2xl'>What food are you offering?</div>
-                            <input className='w-full border-2 border-black rounded-lg p-2' type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+                            <input className='w-full border-2 border-black rounded-lg p-2' type='text' value={eventFood} onChange={(e) => setEventFood(e.target.value)} />
                         </div>
                         <div className='w-3/4 pt-3'>
                             <div className='text-2xl'>Where is the event?</div>
-                            <input className='w-full border-2 border-black rounded-lg p-2' type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+                            <input className='w-full border-2 border-black rounded-lg p-2' type='text' value={eventLocation} onChange={(e) => setEventLocation(e.target.value)} />
                         </div>
                         <div className='w-3/4 pt-3'>
                             <div className='text-2xl'>What is the Room number?</div>
-                            <input className='w-full border-2 border-black rounded-lg p-2' type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+                            <input className='w-full border-2 border-black rounded-lg p-2' type='text' value={eventRoom} onChange={(e) => setEventRoom(e.target.value)} />
                         </div>
                         <div className='flex flex-row w-3/4 pt-3'>
                             <div className='w-1/2 mr-2'>
                                 <div className='text-xl'>What is the date for the event?</div>
-                                <input className='w-full border-2 border-black rounded-lg p-2' type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+                                <input className='w-full border-2 border-black rounded-lg p-2' type='text' value={eventDate} onChange={(e) => setEventDate(e.target.value)} />
                             </div>
                             <div className='w-1/2 ml-2'>
                                 <div className='text-xl'>What time is the event?</div>
-                                <input className='w-full border-2 border-black rounded-lg p-2' type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+                                <input className='w-full border-2 border-black rounded-lg p-2' type='text' value={eventTime} onChange={(e) => setEventTime(e.target.value)} />
                             </div>
                         </div>
                         <div className='w-3/4 pt-3'>
                             <div className='text-2xl'>Please provide a description for the event</div>
-                            <textarea className='w-full border-2 border-black rounded-lg p-2' rows={5} />
+                            <textarea className='w-full border-2 border-black rounded-lg p-2' rows={5} value={eventDescription} onChange={(e) => setEventDescription(e.target.value)}/>
                         </div>
                         <div className='w-3/4 pt-10'>
-                            <button className='w-full border-2 border-black bg-black text-white p-2 rounded-lg'>Create Event</button>
+                            <button className={'w-full border-2 border-black bg-black hover:bg-zinc-800 text-white p-2 rounded-lg ' + (isLoading ? 'hover:cursor-not-allowed' : '')} onClick={addEvent}>Create Event</button>
                         </div>
                     </div>
                 </div>
