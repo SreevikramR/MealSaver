@@ -26,8 +26,9 @@ async function name() {
 
 const Page = () => {
     const router = useRouter();
-    const [isPopUpOpen, setIsPopUpOpen] = useState(true);
-    const [isClubsSelected, setIsClubsSelected] = useState(false); 
+    const [isPopUpOpen, setIsPopUpOpen] = useState(false);
+    const [isClubsSelected, setIsClubsSelected] = useState(true); 
+
     
     const _card = () => {
         return (
