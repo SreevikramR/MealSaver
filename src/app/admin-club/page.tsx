@@ -10,13 +10,6 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_API_KEY || ''  
 const supabase = createClient(supabaseUrl, supabaseKey)
 
-async function name() {
-    const { data, error } = await supabase
-  .from('clubs')
-  .select('*')
-  console.log(data)
-}
-
 interface Event {
     id: string,
     eventName: string,
@@ -41,6 +34,7 @@ const Page = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [events, setEvents] = useState<any[]>([])
     const [activeEvent, setActiveEvent] = useState<Event | null>(null)
+    const [isLogged, setIsLogged] = useState(false);
 
     useEffect(() => {
         const subscription = supabase.auth.onAuthStateChange(
@@ -48,7 +42,7 @@ const Page = () => {
                 if (session == null) {
                     router.push('/')
                 } else {
-                    getData()
+                    setIsLogged(true)
                 }
         })
 
@@ -56,6 +50,10 @@ const Page = () => {
             subscription.data.subscription.unsubscribe()
         }
     }, [])
+
+    useEffect(() => {
+        getData()
+    }, [isLogged])
 
     const getData = async () => {
         const userUUID = (await supabase.auth.getUser()).data.user?.id

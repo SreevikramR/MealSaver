@@ -16,32 +16,69 @@ interface MarkerData {
     description: string,
     location: [number, number]
 }
-async function name() {
-    const { data, error } = await supabase
-  .from('clubs')
-  .select('*')
-  console.log(data)
+interface Event {
+    id: string,
+    eventName: string,
+    description: string,
+    date: string,
+    time: string,
+    location: string,
+    roomNumber: string,
+    items: string
+    clubName: string,
 }
-
-
 
 const Page = () => {
     const router = useRouter();
     const [isPopUpOpen, setIsPopUpOpen] = useState(false);
     const [isClubsSelected, setIsClubsSelected] = useState(true); 
+    const [eventsList, setEventsList] = useState<Event[]>([]);
+    const [isLogged, setIsLogged] = useState(false);
 
+    useEffect(() => {
+        const { data } = supabase.auth.onAuthStateChange(
+            (event, session) => {
+                if (session == null) {
+                    router.push('/')
+                } else {
+                    setIsLogged(true)
+                }
+        })
+
+        return () => {
+            data.subscription.unsubscribe()
+          };
+    }, [])
+
+    useEffect(() => {
+        getData()
+    }, [isLogged])
+
+    const getData = async () => {
+        const { data: events, error } = await supabase
+            .from('clubs')
+            .select('*')
+        if (error) {
+            console.log(error)
+        } else {
+            if (events) {
+                console.log(events)
+                setEventsList(events)
+            }
+        }
+    }
     
-    const _card = () => {
+    const _card = (event:Event) => {
         return (
-            <div className='mt-4 ml-14 w-5/6 border-2 border-slate-300 hover:border-black rounded-xl p-3 flex flex-row hover:cursor-pointer'>
+            <div className='mt-4 ml-14 w-5/6 border-2 border-slate-300 hover:border-black items-center justify-between rounded-xl p-3 flex flex-row hover:cursor-pointer'>
                 <div className='w-3/4 flex flex-col 'onClick={() => setIsPopUpOpen(true)}>
-                    <div className='text-xl font-bold'>ABC Club</div>
-                    <div className='font-semibold '>Free Pizza and Drinks</div>
-                    <div className='font-light'>ILCB 100</div>
+                    <div className='text-xl font-bold'>{event.clubName}</div>
+                    <div className='font-semibold '>{event.items}</div>
+                    <div className='font-light'>{event.location} - {event.roomNumber}</div>
                 </div>
-                <div className='text-center justify-end flex content-center flex-wrap'>
-                    <div className='text-2xl font-bold	'>7:00 PM</div>
-                    <div className='font-light'>1st February 2024</div>
+                <div className='text-right h-fill flex-end flex flex-col flex-wrap'>
+                    <div className='text-xl font-bold'>{event.time}</div>
+                    <div className='font-light'>{event.date}</div>
                 </div>
             </div>
         );
@@ -91,13 +128,9 @@ const Page = () => {
                         <div className={'text-2xl pb-1 border-black cursor-pointer ' + (isClubsSelected ? 'border-b-8' : '')} onClick={() => setIsClubsSelected(true)}>Clubs and Organizations</div>
                         <div className={'text-2xl ml-5 pb-1 border-black cursor-pointer ' + (!isClubsSelected ? 'border-b-8' : '')} onClick={() => setIsClubsSelected(false)}>Restaurants</div>
                     </div>
-                    <_card/>
-                    <_card/>
-                    <_card/>
-                    <_card/>
-                    <_card/>
-                    <_card/>
-                    <_card/>
+                    {eventsList.map((event) => {
+                        return <_card {...event}/>
+                    })}
                 </div>
                 <div className='h-[80vh] w-1/2 flex flex-wrap align-middle mt-10 mr-6 fixed right-0'>
                     <div className='border-2 border-black h-full w-full'>
