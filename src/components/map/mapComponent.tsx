@@ -23,7 +23,7 @@ const Map = ({ markers }:MarkerArray) => {
         />
 
         {markers.map((marker:MarkerData) => (
-            <Marker position={marker.location} icon={new Icon({iconUrl: './marker.png', iconSize: [25, 41], iconAnchor: [12, 41]})} >
+            <Marker key={markers.indexOf(marker)} position={marker.location} icon={new Icon({iconUrl: './marker.png', iconSize: [25, 41], iconAnchor: [12, 41]})} >
                 <Popup>
                 {marker.name} <br /> {marker.description}
                 </Popup>

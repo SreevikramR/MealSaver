@@ -13,7 +13,7 @@ interface MarkerData {
 
 const _card = () => {
     return (
-        <div className='mt-4 ml-10 w-5/6 border-2 border-slate-300 rounded-xl hover:border-black rounded-xl p-3 flex flex-row '>
+        <div className='mt-4 ml-10 w-5/6 border-2 border-slate-300 hover:border-black rounded-xl p-3 flex flex-row '>
             <div className='w-3/4 flex flex-col '>
                 <div className='text-xl font-bold'>ABC Club</div>
                 <div className='font-semibold '>Free Pizza and Drinks</div>
@@ -39,7 +39,7 @@ const Page = () => {
         }
       ), [])
 
-    const data:MarkerData[] = [{"name":"Club ABC", "description":"Free Pizza and Drinks", "location":[30.616131817894647, -96.34003360046086]}]
+    const data:MarkerData[] = [{"name":"Club ABC", "description":"Free Pizza and Drinks", "location":[30.616131817894647, -96.34003360046086]}, {"name":"Club ABC", "description":"Free Pizza and Drinks", "location":[30.6123018, -96.3417165]}, {"name":"Club ABC", "description":"Free Pizza and Drinks", "location":[30.615173429343546, -96.34390437249968]}]
     
 
     return (
