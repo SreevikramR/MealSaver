@@ -123,6 +123,10 @@ const Page = () => {
                                 <input className='w-full border-2 border-black rounded-lg p-2' type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
                             </div>
                         </div>
+                        <div className='w-3/4 pt-3'>
+                            <div className='text-2xl'>Please provide a description for the event</div>
+                            <textarea className='w-full border-2 border-black rounded-lg p-2' rows={5} />
+                        </div>
                         <div className='w-3/4 pt-10'>
                             <button className='w-full border-2 border-black bg-black text-white p-2 rounded-lg'>Create Event</button>
                         </div>
