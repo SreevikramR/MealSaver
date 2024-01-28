@@ -19,10 +19,10 @@ export default function Home() {
       
     
     
-    <div className="container mx-auro px-4 py-8 bg-gray-100">
+    <div className="container mx-auto px-4 py-8 bg-gray-100">
         <h1 className="text-3xl text-center text-gray-800 font-bold mb-8">Join Meal Saver Today!</h1>
         
-        <div className="  rounded-lg shadow-md mb-8 bg-gray-100">
+        <div className="  rounded-lg shadow-md shadow-zinc-200 mb-8 bg-gray-100">
             <h2 className="text-2xl text-center text-gray-800 font-semibold mb-4 bg-gray-100">Why Join Meal Saver?</h2>
             <ul className="list-disc list-inside bg-gray-100">
                 <li className="text-center text-gray-700 mb-2">Save Money: Get locations for free food and coupons for restaurants.</li>
