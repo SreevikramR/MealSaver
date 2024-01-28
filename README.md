@@ -3,6 +3,10 @@ This project was built during TAMU Hack 2024
 View now on -> [Meal Saver](https://mealsaver.vercel.app/)
 
 Devpost article -> [Devpost](https://devpost.com/software/meal-saver)
+
+![Screenshot 2024-01-28 095016](https://github.com/SreevikramR/tamuhack2024/assets/48626706/8dca2d63-dca6-46b5-878f-65388987c98d)
+
+
 ## Inspiration
 The inspiration behind our project stems from the desire to address the common struggle among university students to find affordable and accessible food options. Many students face financial constraints and often resort to skipping meals or compromising on the quality of their nutrition. We wanted to create a solution that alleviates this burden by aggregating information about places offering free food and food coupons specifically tailored to university students.
 
