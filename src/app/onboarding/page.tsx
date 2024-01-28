@@ -88,6 +88,10 @@ const Page = () => {
                                 <div className='text-2xl'>What&apos;s the name of your Restaurant?</div>
                                 <input className='w-full border-2 border-black rounded-lg p-2' type='text' value={email} onChange={(e) => setEmail(e.target.value)} />
                             </div>
+                            <div className='w-3/4 pt-4'>
+                                <div className='text-2xl'>Where are you located?</div>
+                                <input className='w-full border-2 border-black rounded-lg p-2' type='text' value={email} onChange={(e) => setEmail(e.target.value)} />
+                            </div>
                             <div className='w-3/4 pt-10'>
                                 <button className='w-full border-2 border-black bg-black text-white p-2 rounded-lg' >Submit</button>
                             </div>
