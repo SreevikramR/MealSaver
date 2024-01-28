@@ -50,6 +50,9 @@ const Page = () => {
                     </div>
                 </div>
             </div>
+            <footer className="text-center mt-8 text-gray-500 text-sm">
+            &copy; 2024 Meal Saver. All rights reserved.
+        </footer>
         </div>
     )
 }
