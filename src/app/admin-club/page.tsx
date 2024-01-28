@@ -22,7 +22,7 @@ const Page = () => {
     const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [isPopUpOpen, setIsPopUpOpen] = useState(true);
+    const [isPopUpOpen, setIsPopUpOpen] = useState(false);
     
     const _card = () => {
         return (
